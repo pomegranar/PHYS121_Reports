@@ -1,0 +1,230 @@
+---
+title: "🔊"
+format:
+  pdf:
+    documentclass: article
+    papersize: a4
+    geometry:
+      - margin=1in
+    fontsize: 11pt
+    mainfont: "Latin Modern Roman"
+    mathfont: "Latin Modern Math"
+    monofont: "Latin Modern Mono"
+    include-in-header:
+      text: |
+        \usepackage{amsmath}
+        \usepackage{changepage}
+        \usepackage{fancyhdr}
+        \usepackage{pdfpages}
+        \usepackage{booktabs}
+        \usepackage{caption}
+        \captionsetup[figure]{labelfont=bf, textfont=it}
+        \captionsetup[table]{labelfont=bf, textfont=it}
+        \usepackage{float}
+        \makeatletter
+        \renewenvironment{figure}{\@float{figure}[H]}{\end@float}
+        \renewenvironment{table}{\@float{table}[H]}{\end@float}
+        \makeatletter
+        \pagestyle{fancy}
+        \fancyhf{}
+        \rhead{IS-PHYS Lab}
+        \lhead{\thepage}
+    number-sections: true
+jupyter: python3
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+\thispagestyle{empty}
+
+\begin{center}
+\vspace{-4 cm}
+\Large{IS-PHYS Lab}\\[2em]
+\LARGE\textbf{Title of the Report}\\[4em]
+
+\large
+\vspace{4 cm}
+\textbf{Name:} [Your Name Here]\\[1em]
+\textbf{Partner:} [Partner Name(s) Here]\\[1em]
+\textbf{Instructor:} [TA Name Here]\\[1em]
+\textbf{Lab Instructor:} [TA Name Here]\\[1em]
+\vspace{8 cm}
+\textbf{Date:} [Date Here]\\[1em]
+\end{center}
+
+\newpage
+
+\begin{center}
+\textbf{Abstract}
+\end{center}
+
+::: {.abstract}
+\begin{adjustwidth}{2em}{2em}
+[Write your abstract here after completing all other sections. 250 words or fewer.]
+
+**What did you do?** 
+
+**Talk about your results?** 
+
+**What do these results tell you?** 
+\end{adjustwidth}
+:::
+
+\newpage
+
+# Background
+
+## Purpose of the Experiment
+
+[Why conduct this experiment? 1–2 paragraphs]
+
+## Physical Principles
+
+[What is the physics behind? 1–2 paragraphs]
+
+## Experimental Method
+
+[How are you going to do it? 1–2 paragraphs]
+
+```{python}
+#| label: fig-setup
+#| fig-cap: "Experimental setup showing [describe your setup]"
+#| fig-width: 6
+#| fig-height: 4
+
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib import rc
+
+# Create your setup diagram
+fig, ax = plt.subplots(figsize=(6, 4))
+
+# Example: simple setup sketch
+ax.plot([0, 1], [0, 0], 'k-', linewidth=2)
+ax.plot([0, 0], [0, 1], 'k-', linewidth=2)
+ax.annotate(r'$\theta$', xy=(0.15, 0.05), fontsize=12)
+
+ax.set_xlim(-0.5, 1.5)
+ax.set_ylim(-0.5, 1.5)
+ax.set_aspect('equal')
+ax.axis('off')
+
+plt.tight_layout()
+plt.show()
+```
+
+# Data
+
+[Paragraph describing the data contained in the tables below]
+
+```{python}
+#| label: tbl-raw-data
+#| tbl-cap: "Raw experimental data measurements"
+#| output: asis
+
+import pandas as pd
+
+# Your raw data
+data = {
+    'x (m)': [0.0044151, 0.0021633, 0.0003600, 0.0023831],
+    'V (V)': [0.0030871, 0.0021343, 0.0018642, 0.0013287]
+}
+
+df = pd.DataFrame(data)
+
+# Generate LaTeX table
+latex_table = df.style.format({
+    'x (m)': '{:.7f}',
+    'V (V)': '{:.7f}'
+}).hide(axis="index").to_latex(
+    hrules=True,
+    column_format='cc',
+    position='H',
+    position_float='centering'
+)
+
+# Print raw LaTeX (output: asis makes Quarto render it)
+print(latex_table)
+```
+
+**Note:** Original raw data sheets are attached at the end of this report.
+
+# Results and Discussion
+
+## Calculations
+
+[Description of analysis performed]
+
+**Equation used:**
+
+$$
+y = mx + b
+$$ {#eq-linear}
+
+**Sample calculation:**
+
+For the first data point where $x = 0.0044151$ m and $V = 0.0030871$ V:
+
+$$
+\begin{aligned}
+y &= mx + b \\
+  &= (0.5)(0.0044151) + 0.001 \\
+  &= 0.0032076 \text{ V}
+\end{aligned}
+$$
+
+```{python}
+#| label: fig-results
+#| fig-cap: "Voltage vs. Position showing linear relationship"
+#| fig-width: 6
+#| fig-height: 4.5
+
+# Prepare data for plotting
+x = np.array([0.0044151, 0.0021633, 0.0003600, 0.0023831])
+V = np.array([0.0030871, 0.0021343, 0.0018642, 0.0013287])
+
+# Perform linear fit
+coeffs = np.polyfit(x, V, 1)
+fit_line = np.poly1d(coeffs)
+x_fit = np.linspace(x.min(), x.max(), 100)
+
+# Create figure
+fig, ax = plt.subplots(figsize=(6, 4.5))
+
+# Plot data and fit
+ax.plot(x, V, 'o', markersize=8, label='Experimental data', 
+        markerfacecolor='none', markeredgewidth=1.5, markeredgecolor='C0')
+ax.plot(x_fit, fit_line(x_fit), '-', linewidth=1.5, 
+        label=f'Linear fit: $V = {coeffs[0]:.4f}x + {coeffs[1]:.6f}$')
+
+# Labels and formatting
+ax.set_xlabel(r'Position, $x$ (m)', fontsize=11)
+ax.set_ylabel(r'Voltage, $V$ (V)', fontsize=11)
+ax.legend(loc='best', frameon=True, fontsize=10)
+ax.grid(True, alpha=0.3, linestyle='--')
+ax.tick_params(labelsize=10)
+
+plt.tight_layout()
+plt.show()
+```
+
+## Analysis of Results
+
+[Discuss what the graphs and calculations show. Interpret the slope, intercept, or other relevant parameters.]
+
+# Conclusions
+
+[One-paragraph summary explaining your principal results. Address:]
+
+- What the experiment demonstrated
+- How well the results matched theoretical predictions
+- Sources of uncertainty or error
+- Key takeaways and understanding gained
+
+\newpage
+
+# Appendix: Raw Data Sheets {.unnumbered}
+
+[Attach photocopies of original lab notebook pages here]
