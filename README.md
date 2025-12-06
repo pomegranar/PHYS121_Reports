@@ -8,6 +8,8 @@ A simple template for writing lab reports _programmatically_ for anyone taking *
 
 - Python3
 - Make
+- LaTeX distribution ([TeX Live](https://www.tug.org/texlive/) / [MacTeX](https://www.tug.org/mactex/) / [MiKTeX](https://miktex.org/))
+- [Quarto](https://quarto.org/docs/get-started/)
 
 ## Steps:
 
