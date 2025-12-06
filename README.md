@@ -6,44 +6,10 @@ A simple template for writing lab reports _programmatically_ for anyone taking *
 
 ## Prerequisites:
 
-### Required Software:
-
-- **Python 3.8+** - For running analysis code and Jupyter notebooks
-- **Make** - For building the reports (usually pre-installed on Linux/macOS)
-- **LaTeX Distribution** - For PDF generation and plot text rendering
-  - **Linux**: Install TeX Live via your package manager
-    ```bash
-    # Ubuntu/Debian
-    sudo apt-get install texlive-latex-extra texlive-fonts-recommended
-
-    # Fedora/RHEL
-    sudo dnf install texlive-scheme-medium
-    ```
-  - **macOS**: Install MacTeX (TeX Live for Mac)
-    ```bash
-    brew install --cask mactex
-    # Or download from https://www.tug.org/mactex/
-    ```
-  - **Alternative**: MiKTeX works on all platforms but may require additional package installation
-
-- **Quarto** - For rendering Quarto markdown documents to PDF
-  - **Linux/macOS**: Install via package manager or download from [quarto.org](https://quarto.org/docs/get-started/)
-    ```bash
-    # macOS
-    brew install quarto
-
-    # Linux - download and install from https://quarto.org/docs/get-started/
-    ```
-
-> **Note**: The setup script installs `quarto-cli` via pip, but you should also install Quarto system-wide for best compatibility.
-
-### Why LaTeX is Required:
-
-LaTeX is essential for this template because:
-1. **Quarto PDF Generation**: Quarto uses LaTeX (pdflatex) to compile `.qmd` files to PDF
-2. **Matplotlib Plot Rendering**: The template configures matplotlib to use LaTeX for text rendering in plots (see `matplotlibrc` and `plot_helpers.py`), ensuring consistent typography between your plots and document
-
-Without a LaTeX distribution installed, both `make preview` and plot generation will fail.
+- Python3
+- Make
+- LaTeX distribution ([TeX Live](https://www.tug.org/texlive/) / [MacTeX](https://www.tug.org/mactex/) / [MiKTeX](https://miktex.org/))
+- [Quarto](https://quarto.org/docs/get-started/)
 
 ## Steps:
 
@@ -58,24 +24,6 @@ Without a LaTeX distribution installed, both `make preview` and plot generation 
    > This creates a python environment in `/.physics`. It's not necessary to activate this environment to build the report, but you should set it as your active python environment to use language support in your code editor.
 
 4. Duplicate the `lab-report-template` directory under a new name, such as `lab-report-1`, and open it in your editor of choice.
-
-### Verify Your Installation:
-
-To check if all dependencies are properly installed, navigate to your lab report directory and run:
-
-```bash
-make check-deps
-```
-
-This will verify that Python packages and Quarto are available. To manually check LaTeX:
-
-```bash
-# Check if LaTeX is installed
-pdflatex --version
-
-# Check if Quarto is installed
-quarto --version
-```
 
 ## Workflow:
 
