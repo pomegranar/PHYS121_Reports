@@ -1,5 +1,6 @@
 ---
 title: "🔊"
+# The title field must be an emoji to prevent Quarto from inserting an extra title. 
 format:
   pdf:
     documentclass: article

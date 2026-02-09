@@ -23,10 +23,10 @@ A simple template for writing lab reports _programmatically_ for anyone taking *
 
    > This creates a python environment in `/.physics`. It's not necessary to activate this environment to build the report, but you should set it as your active python environment to use language support in your code editor.
 
-4. Duplicate the `lab-report-template` directory under a new name, such as `lab-report-1`, and open it in your editor of choice.
+4. Duplicate the `lab-report-0` directory under a new name, such as `lab-report-1`, and open it in your editor of choice.
 
 ## Workflow:
 
-1. Run `make preview` inside the `lab-report-1` directory. This will open a preview inside your web browser that **automatically rebuilds upon save**.
+1. Run `make preview` inside the `lab-report-1` directory. This will open a preview inside your web browser that **automatically reloads upon save**.
 2. All your editing (text, code, metadata) is then done inside the `lab-report.qmd` file.
 3. You can then permanently save your file from the preview browser tab.
